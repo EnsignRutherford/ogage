@@ -24,3 +24,10 @@ apt autoremove
 apt remove rustc
 apt install brightnessctl rustc autotools-dev automake libtool libtool-bin libevdev-dev
 ```
+
+If compiling in ArkOS the version of rust available through the Ubuntu repo there is old. Do the following:
+```
+sudo apt remove -y rustc
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh (Do the customize install, choose the default options, but for profile do minimal.)
+source "$HOME/.cargo/env"
+```
