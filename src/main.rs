@@ -19,6 +19,7 @@ static QVOL_DN:     EventCode = EventCode::EV_KEY(EV_KEY::BTN_DPAD_LEFT);
 static VOL_UP:      EventCode = EventCode::EV_KEY(EV_KEY::KEY_VOLUMEUP);
 static VOL_DN:      EventCode = EventCode::EV_KEY(EV_KEY::KEY_VOLUMEDOWN);
 static MUTE:        EventCode = EventCode::EV_KEY(EV_KEY::KEY_PLAYPAUSE);
+static MUTE2:       EventCode = EventCode::EV_KEY(EV_KEY::BTN_THUMBL);
 static BT_TRG:      EventCode = EventCode::EV_KEY(EV_KEY::BTN_MODE);
 
 fn process_event(_dev: &Device, ev: &InputEvent, hotkey: bool) {
@@ -56,6 +57,9 @@ fn process_event(_dev: &Device, ev: &InputEvent, hotkey: bool) {
         else if ev.event_code == EventCode::EV_KEY(EV_KEY::KEY_POWER) && ev.value > 0 {
             //blink2();
             Command::new("finish.sh").spawn().ok().expect("Failed to execute shutdown process");
+        }
+        else if ev.event_code == MUTE2 && ev.value > 0 {
+            Command::new("mute_toggle.sh").output().expect("Failed to execute amixer");
         }
     }
     else if ev.event_code == EventCode::EV_SW(EV_SW::SW_HEADPHONE_INSERT) {
